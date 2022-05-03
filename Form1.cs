@@ -19,7 +19,22 @@ namespace snapshot
             Thread.Sleep(1000);
             SendKeys.Send("{PRTSC}");
             Image myImage = Clipboard.GetImage();
-            myImage.Save("screenshot/"+fileName);
+            if (myImage != null)
+            {
+                if (!(Directory.Exists("C:/screenshot")))
+                {
+                    Directory.CreateDirectory("C:/screenshot");
+                }
+                try
+                {   
+                    myImage.Save("C:/screenshot/" + fileName, myImage.RawFormat);
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
+            }
+            else
+            {
+                MessageBox.Show("Null Image pointer Received!");
+            }
             this.Show();
         }
     }
